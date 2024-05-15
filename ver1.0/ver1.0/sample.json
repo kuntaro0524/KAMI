@@ -1,0 +1,15 @@
+[
+    { "plateID": 349, "name": "DNA1_CS" },
+    { "plateID": 350, "name": "DNA1_IDX" },
+    { "plateID": 351, "name": "DNA1_WZ12" },
+    { "plateID": 352, "name": "DNA1_PACT" },
+    { "plateID": 353, "name": "DNA1_PEG" },
+    { "plateID": 354, "name": "DNA2_CS" },
+    { "plateID": 355, "name": "DNA2_IDX" },
+    { "plateID": 356, "name": "DNA2_WZ12" },
+    { "plateID": 357, "name": "DNA2_PACT" },
+    { "plateID": 358, "name": "DNA2_PEG" },
+    { "plateID": 359, "name": "DNA1_SALT" },
+    { "plateID": 360, "name": "DNA2_SALT" }
+
+]
