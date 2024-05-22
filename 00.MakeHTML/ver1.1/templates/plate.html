@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Plate {{ plate_id }}</title>
+    <style>
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            gap: 10px;
+        }
+        .grid img {
+            width: 100%;
+            height: auto;
+        }
+        .debug {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>PLATE {{ plate_id }}</h1>
+    <div class="grid">
+        {% for well_num, img_url, img_huge_url in thumbnails %}
+            <div style="grid-column: {{ ((well_num-1) % 12) + 1 }}; grid-row: {{ ((well_num-1) // 12) + 1 }};">
+                <a href="{{ img_huge_url }}">
+                    <img src="{{ img_url }}" alt="Well {{ well_num }}">
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</body>
+</html>

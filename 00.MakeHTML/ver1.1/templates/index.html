@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Plate List</title>
+</head>
+<body>
+    <h1>Plate List</h1>
+    <ul>
+        {% for plate in plates %}
+            <li><a href="{{ url_for('plate', plate_id=plate.plateID) }}">{{ plate.name }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
