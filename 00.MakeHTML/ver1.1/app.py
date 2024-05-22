@@ -69,7 +69,14 @@ def plate(plate_id):
                     thumbnails.append((well_num, img_url, img_huge_url))
                     break
     thumbnails.sort(key=lambda x: x[0])
-    return render_template('plate.html', plate_id=plate_id, thumbnails=thumbnails, debug_info=debug_info)
+
+    # plate名を取得する
+    name = ""
+    for plate in plates:
+        if plate['plateID'] == plate_id:
+            name = plate['name']
+            break
+    return render_template('plate.html', plate_id=plate_id, plate_name=name, thumbnails=thumbnails, debug_info=debug_info)
 
 @app.route('/images/<path:filename>')
 def static_image(filename):

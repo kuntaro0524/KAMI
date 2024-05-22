@@ -23,7 +23,7 @@
     </style>
 </head>
 <body>
-    <h1>PLATE {{ plate_id }}</h1>
+    <h1> Plate {{ plate_id }} {{plate_name}} </h1>
     <div class="grid">
         {% for well_num, img_url, img_huge_url in thumbnails %}
             <div style="grid-column: {{ ((well_num-1) % 12) + 1 }}; grid-row: {{ ((well_num-1) // 12) + 1 }};">
