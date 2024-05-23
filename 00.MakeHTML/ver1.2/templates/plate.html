@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Plate {{ plate_id }}</title>
+    <style>
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            gap: 2px;
+            grid-gap: 2px; /* ここで隙間の大きさを調整します。 */
+        }
+        .grid img {
+            width: 100%;
+            height: auto;
+        }
+        .debug {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+        }
+        .UNKO {
+            font-size: 39px;
+            color: blue;
+        }
+        .well-label {
+            font-size: 10px;
+            text-align: center;
+            margin-top: 2px;
+            margin-bottom: 2px;
+        }
+    </style>
+</head>
+<body>
+    <body>
+        <body>
+            <h1 class="UNKO"> Plate {{ plate_id }} {{plate_name}} </h1>
+            <div class="grid">
+                {% set row_labels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'] %}
+                {% for well_num, img_url, img_huge_url in thumbnails %}
+                    {% set row_index = ((well_num-1) // 12) %}
+                    {% set column_index = ((well_num-1) % 12) + 1 %}
+                    <div style="grid-column: {{ column_index }}; grid-row: {{ row_index + 1 }};">
+                        <p class="well-label">{{ row_labels[row_index] }}{{ column_index }}</p>
+                        <a href="/image?index={{ row_labels[row_index] }}{{ column_index }}&img_url={{ img_huge_url }}" title="{{ row_labels[row_index] }}{{ column_index }}">
+                            <img src="{{ img_huge_url }}" alt="Well {{ well_num }}">
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </body>
+    </body>
+</body>
+</body>
+</html>

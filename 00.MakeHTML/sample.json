@@ -1,0 +1,14 @@
+[
+    { "plate_index": 349, "plate_name": "DNA1_CS" },
+    { "plate_index": 350, "plate_name": "DNA1_IDX" },
+    { "plate_index": 351, "plate_name": "DNA1_WZ12" },
+    { "plate_index": 352, "plate_name": "DNA1_PACT" },
+    { "plate_index": 353, "plate_name": "DNA1_PEG" },
+    { "plate_index": 354, "plate_name": "DNA2_CS" },
+    { "plate_index": 355, "plate_name": "DNA2_IDX" },
+    { "plate_index": 356, "plate_name": "DNA2_WZ12" },
+    { "plate_index": 357, "plate_name": "DNA2_PACT" },
+    { "plate_index": 358, "plate_name": "DNA2_PEG" },
+    { "plate_index": 359, "plate_name": "DNA1_SALT" },
+    { "plate_index": 360, "plate_name": "DNA2_SALT" }
+]
