@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Plate List</title>
+</head>
+<body>
+    <h1>Plate List</h1>
+    <ul>
+        {% for plate in plates %}
+                <!-- url_forはFlaskフレームワークで使用される関数で、URLを動的に生成します。
+            この関数は、アプリケーションのURLマップから特定の関数に対応するURLを構築します。
+            url_for関数の最初の引数はエンドポイント名で、通常はビュー関数の名前です。この場合、それは'plate'です。エンドポイント名を指定することで、Flaskはそのエンドポイントに対応するURLを生成します。
+            次に、キーワード引数を使用してURLの動的部分を指定します。この場合、それはplate_id=plate.plateIDです。これは、URLルート内の<plate_id>部分をplate.plateIDの値で置き換えることを意味します。
+                例えば、もしplate関数が@app.route('/plates/<int:plate_id>')と定義されていて、plate.plateIDが123であれば、url_for('plate', plate_id=plate.plateID)は/plates/123というURLを生成します。
+                    このように、url_for関数はアプリケーション内の特定の場所へのリンクを生成するための強力なツールです。 -->
+            <li><a href="{{ url_for('plate', plate_id=plate.plateID) }}">{{ plate.name }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
