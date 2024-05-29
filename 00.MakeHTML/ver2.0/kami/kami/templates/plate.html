@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Plate {{ plate_name }} (Drop={{drop_type}}) </title>
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: auto repeat(12, 1fr);
+            grid-template-rows: auto repeat(8, 1fr);
+            gap: 10px;
+        }
+        .grid-item img {
+            width: 100%;
+            height: auto;
+        }
+        .row-label, .col-label {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            position: relative;
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .arrow {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            transition: 0.6s ease;
+            user-select: none;
+        }
+        .arrow-left {
+            left: 0;
+        }
+        .arrow-right {
+            right: 0;
+        }
+        .caption {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #f1f1f1;
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Plate {{ plate_name }} (Drop={{drop_type}}) </h1>
+    <div>
+        <a href="{{ url_for('plate', plate_id=plate_id, drop_type='d1') }}">Drop 1</a> | 
+        <a href="{{ url_for('plate', plate_id=plate_id, drop_type='d2') }}">Drop 2</a>
+    </div>
+    <div class="grid-container">
+        <div></div> <!-- Empty top-left cell -->
+        {% for col in range(1, 13) %}
+            <div class="col-label">{{ col }}</div>
+        {% endfor %}
+
+        {% set row_labels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'] %}
+        {% for row in range(8) %}
+            <div class="row-label">{{ row_labels[row] }}</div> <!-- Row Labels A-H -->
+            {% for col in range(12) %}
+                {% set well_num = row * 12 + col + 1 %}
+                {% set drop_data = wells[well_num][drop_type] %}
+                <div class="grid-item">
+                    {% if drop_data.thumbnail_low %}
+                        <img src="{{ url_for('static_image', filename=drop_data.thumbnail_low) }}" alt="Well {{ well_num }}" onclick="openModal({{ well_num }}, '{{ row_labels[row] }}', {{ col + 1 }})">
+                    {% elif drop_data.thumbnail %}
+                        <img src="{{ url_for('static_image', filename=drop_data.thumbnail) }}" alt="Well {{ well_num }}" onclick="openModal({{ well_num }}, '{{ row_labels[row] }}', {{ col + 1 }})">
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% endfor %}
+        
+    </div>
+        <a href="{{ url_for('index') }}"> Back to the plate index </a>
+
+    <div id="myModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="img01">
+        <div class="caption" id="caption"></div>
+        <a class="arrow arrow-left" onclick="changeImage(-1)">&#10094;</a>
+        <a class="arrow arrow-right" onclick="changeImage(1)">&#10095;</a>
+    </div>
+
+    <script>
+        var wells = {{ wells|tojson }};
+        var dropType = "{{ drop_type }}";
+        var currentWellNum = 0;
+
+        function openModal(wellNum, rowLabel, colNum) {
+            currentWellNum = wellNum;
+            var img = wells[wellNum][dropType].high_res;
+            document.getElementById("img01").src = "/images/" + img;
+            document.getElementById("caption").innerHTML = rowLabel + colNum;
+            document.getElementById("myModal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+        }
+
+        function changeImage(direction) {
+            currentWellNum += direction;
+            if (currentWellNum < 1) {
+                currentWellNum = 96;
+            } else if (currentWellNum > 96) {
+                currentWellNum = 1;
+            }
+            var img = wells[currentWellNum][dropType].high_res;
+            var row = Math.floor((currentWellNum - 1) / 12);
+            var col = (currentWellNum - 1) % 12 + 1;
+            var rowLabel = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'][row];
+            document.getElementById("img01").src = "/images/" + img;
+            document.getElementById("caption").innerHTML = rowLabel + col;
+        }
+    </script>
+</body>
+</html>
