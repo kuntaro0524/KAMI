@@ -1,0 +1,2 @@
+recursive-include kami/templates *.html
+recursive-include kami/static *
